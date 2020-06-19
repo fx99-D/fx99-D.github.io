@@ -12,11 +12,10 @@ Albert Einstein verstarb 1955 in Princton.
 * 1896 Matura (Abitur) in Aarau
 * 1900 Diplom als Fachlehrer in mathematischer Richtung am Polytechnikums Zürich (heute ETH)
 * 1902 Anstellung als technischer Experte 3. Klasse beim Schweizer Patentamt in Bern
-* 1905 Veröffentlichung von fünf seiner wichtigsten Werke
+* 1905 Veröffentlichung von fünf seiner wichtigsten Werke, darunter
   * Über einen die Erzeugung und Verwandlung des Lichts betreffenden heuristischen Gesichtspunkt
   * Dissertation : Eine neue Bestimmung der Moleküldimensionen
   * Über die von der molekularkinetischen Theorie der Wärme geforderte Bewegung von in ruhenden Flüssigkeiten suspendierten Teilchen
-  * Zur Elektrodynamik bewegter Körper
   * Zur Elektrodynamik bewegter Körper
 * 1907 Habilitation an der Berner Universität
 * 1909 Dozenten später außerordentlichen Professor für theoretische Physik an der Universität Zürich
@@ -31,7 +30,7 @@ Albert Einstein verstarb 1955 in Princton.
 * 1955 im Alter von 76 Jahren in Princeton gestorben
 
 ## Bekannte Zitat
-* Gott würfelt nicht!
-* E = m c²
+> Gott würfelt nicht!
+> E = m c²
 
 Quelle: https://de.wikipedia.org/wiki/Albert_Einstein
