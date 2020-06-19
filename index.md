@@ -35,3 +35,6 @@ Albert Einstein verstarb 1955 in Princton.
 > E = m c²
 
 Quelle: https://de.wikipedia.org/wiki/Albert_Einstein
+
+<img src="https://de.wikipedia.org/wiki/Albert_Einstein#/media/Datei:Einstein_1921_portrait2.jpg"/>
+Albert Einstein, Fotografie von Ferdinand Schmutzer, 1921 
