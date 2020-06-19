@@ -36,5 +36,5 @@ Albert Einstein verstarb 1955 in Princton.
 
 Quelle: https://de.wikipedia.org/wiki/Albert_Einstein
 
-<img src="https://de.wikipedia.org/wiki/Albert_Einstein#/media/Datei:Einstein_1921_portrait2.jpg"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Einstein_1921_portrait2.jpg/800px-Einstein_1921_portrait2.jpg"/>
 Albert Einstein, Fotografie von Ferdinand Schmutzer, 1921 
