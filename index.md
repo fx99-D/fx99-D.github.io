@@ -13,11 +13,11 @@ Albert Einstein verstarb 1955 in Princton.
 * 1900 Diplom als Fachlehrer in mathematischer Richtung am Polytechnikums Zürich (heute ETH)
 * 1902 Anstellung als technischer Experte 3. Klasse beim Schweizer Patentamt in Bern
 * 1905 Veröffentlichung von fünf seiner wichtigsten Werke
-** Über einen die Erzeugung und Verwandlung des Lichts betreffenden heuristischen Gesichtspunkt
-** Dissertation : Eine neue Bestimmung der Moleküldimensionen
-** Über die von der molekularkinetischen Theorie der Wärme geforderte Bewegung von in ruhenden Flüssigkeiten suspendierten Teilchen
-** Zur Elektrodynamik bewegter Körper
-** Zur Elektrodynamik bewegter Körper
+  * Über einen die Erzeugung und Verwandlung des Lichts betreffenden heuristischen Gesichtspunkt
+  * Dissertation : Eine neue Bestimmung der Moleküldimensionen
+  * Über die von der molekularkinetischen Theorie der Wärme geforderte Bewegung von in ruhenden Flüssigkeiten suspendierten Teilchen
+  * Zur Elektrodynamik bewegter Körper
+  * Zur Elektrodynamik bewegter Körper
 * 1907 Habilitation an der Berner Universität
 * 1909 Dozenten später außerordentlichen Professor für theoretische Physik an der Universität Zürich
 * 1911 ordentlicher Professor der theoretischen Physik an der deutschen Universität Prag
@@ -29,5 +29,9 @@ Albert Einstein verstarb 1955 in Princton.
 * 1933 Mitglied des Institute for Advanced Study in Princton
 * 1939 Unterzeichnung eines von Leó Szilárd verfassten Briefesan den amerikanischen Präsidenten Franklin D. Roosevelt, der vor der Gefahr einer „Bombe neuen Typs“ in Deutschland warnte
 * 1955 im Alter von 76 Jahren in Princeton gestorben
+
+## Bekannte Zitat
+* Gott würfelt nicht!
+* E = m c²
 
 Quelle: https://de.wikipedia.org/wiki/Albert_Einstein
