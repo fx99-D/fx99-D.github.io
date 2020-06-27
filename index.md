@@ -18,7 +18,7 @@ Albert Einstein verstarb 1955 in Princton.
   * Über die von der molekularkinetischen Theorie der Wärme geforderte Bewegung von in ruhenden Flüssigkeiten suspendierten Teilchen
   * Zur Elektrodynamik bewegter Körper
 * 1907 Habilitation an der Berner Universität
-* 1909 Dozenten später außerordentlichen Professor für theoretische Physik an der Universität Zürich
+* 1909 Dozent später außerordentlichen Professor für theoretische Physik an der Universität Zürich
 * 1911 ordentlicher Professor der theoretischen Physik an der deutschen Universität Prag
 * 1912 Rückkehr an die Eidgenössischen Technischen Hochschule
 * 1914 Berufung an die Preußische Akademie der Wissenschaften in Berlin
@@ -37,4 +37,4 @@ Albert Einstein verstarb 1955 in Princton.
 Quelle: https://de.wikipedia.org/wiki/Albert_Einstein
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Einstein_1921_portrait2.jpg/800px-Einstein_1921_portrait2.jpg"/>
-Albert Einstein, Fotografie von Ferdinand Schmutzer, 1921 
+Albert Einstein, Fotografie von Ferdinand Schmutzer, 1921
