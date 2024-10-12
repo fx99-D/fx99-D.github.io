@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MFG-Markus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+
+  <!-- Load Leaflet code library - see updates at http://leafletjs.com/download.html -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+  <!-- Load jQuery and PapaParse to read data from a CSV file -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+
+  <!-- Position the map with Cascading Style Sheet (CSS) -->
+  <style>
+    body { margin:0; padding:0; }
+    #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+  </style>
+
+</head>
+<body>
+
+  <!-- Insert HTML division tag to layout the map -->
+  <div id="map"></div>
+
+  <!-- Insert Javascript (.js) code to create the map -->
+  <script>
+
+  // originally from:  https://leafletjs.com/examples/custom-icons/
+  // marker grouping from: https://leafletjs.com/examples/layers-control/ 
+  // csv handling:
+  // https://handsondataviz.org/leaflet-maps-with-csv.html 
+  // https://github.com/HandsOnDataViz/leaflet-map-csv 
+  // https://github.com/HandsOnDataViz/leaflet-map-csv/blob/main/index.html 
+
+  function makePOI(csvFile) {
+    // alert('makePOI:'+csvFile );
+    // model for various icons 
+    var SDIcon = L.Icon.extend({
+      options: {
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [0, -10],
+     }
+    });
+    const clubs = L.layerGroup();
+  // Read markers data from file csvString
+    $.get(csvFile, function(csvString) {
+      // Use PapaParse to convert string to array of objects
+      var data = Papa.parse(csvString, {header: true, dynamicTyping: true}).data;
+      // For each row in data, create a marker and add it to clubs 
+      // For each row, columns `Latitude`, `Longitude`, Description, Icon, and `Title` are required
+      for (var i in data) {
+        var row = data[i];
+        var marker = L.marker([row.Latitude, row.Longitude], {
+          icon: new SDIcon({iconUrl: row.Icon })
+          }).bindPopup('<strong>'+row.Title + '</strong><br>'+row.Description).addTo(clubs);
+      }
+    });
+    
+    return clubs;
+  }
+
+  function makeStar2(csvFile, dist, center) {
+  // Read position of markers data from file csvString
+    // alert('makeStar:'+csvFile +' '+ dist.toString());
+
+    const lines = [];
+    const difflatlng = [];
+    const latfak = 0.65;  // correction for long contraction 
+    var dfak = 0.0;
+    var ldist ;
+    const star = L.layerGroup();
+ 
+    $.get(csvFile, function(csvString) {
+      // Use PapaParse to convert string to array of objects
+      var data = Papa.parse(csvString, {header: true, dynamicTyping: true}).data;
+      // For each row in data, create a marker and add it to clubs 
+      // For each row, columns `Latitude`, `Longitude`, Description, Icon, and `Title` are required
+      
+      // for all points draw a line from Marker to a circle of radius = dist around center
+      for (var i in data) {
+        var row = data[i];
+        if (i<3000) {  // allow to reduce data for testing
+	     difflatlng[0] = center[0] - row.Latitude; difflatlng[1] = center[1] - row.Longitude;
+	     // alert('difflatlng:'+difflatlng.toString());
+           ldist = Math.sqrt(difflatlng[0]**2 + (difflatlng[1]*latfak)**2)*111;
+           dfak = dist / 1000 / ldist;
+	     lines[i] = [[center[0]-dfak*difflatlng[0],center[1]-dfak*difflatlng[1]],[row.Latitude,row.Longitude]];
+	    // alert(lines[i].toString());
+            polyline = L.polyline([lines[i]], {color: 'green'}).addTo(star);  
+          }
+      }
+    });
+    
+    return star;
+  }
+
+// make markers for input file -> overlays
+  msMarkers = makePOI('./TeilnehmerlisteMFG-3.csv');
+  const overlays = { 'MarkusMain': msMarkers };
+
+// init OSM DE tiles -> baseLayers 
+  const OpenStreetMap_DE = L.tileLayer('https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
+	maxZoom: 18,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  });
+  const baseLayers = { 'OSM DE': OpenStreetMap_DE };
+
+  // Set up initial map center and zoom level
+  var map = L.map('map', {
+    center: [49.5922, 11.0310], // EDIT latitude, longitude to re-center map
+    zoom: 10,  // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+    layers: [OpenStreetMap_DE, msMarkers],
+    scrollWheelZoom: true
+  });
+
+// Erlangen (Kreis)
+    const circle = L.circle([49.5922, 11.0310], {
+		color: 'red',
+		fillColor: '#f03',
+		fillOpacity: 0.1,
+		radius: 3000
+	}).addTo(map).bindPopup('Erlangen');
+
+ /* Control panel to display map layers */
+  const controlLayers = L.control.layers( baseLayers, overlays, {
+    position: "topright",
+    collapsed: false
+  }).addTo(map);
+
+// init Standards OSM tiles
+  var OpenStreetMap_Mapnik = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+   });
+  controlLayers.addBaseLayer(OpenStreetMap_Mapnik, 'OSM standard'); 
+
+// init Esri Satellite tiles
+  var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+  });
+  controlLayers.addBaseLayer(Esri_WorldImagery, 'Esri Luftbild'); 
+
+// see more basemap options at https://leaflet-extras.github.io/leaflet-providers/preview/
+
+// make star from file 1 -> star and add to map
+  stars = makeStar2('./TeilnehmerlisteMFG-3.csv',3000, [49.5921, 11.0310]);
+  controlLayers.addOverlay(stars , 'Stern');
+
+  map.attributionControl.setPrefix(
+    'View <a href="https://github.com/HandsOnDataViz/leaflet-map-csv" target="_blank">code on GitHub</a>'
+  );
+
+  </script>
+</body>
+</html>
