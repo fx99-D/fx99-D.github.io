@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teilnehmer</title>
+  // <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta charset="windows-1252">
+  
+  <!-- Load Leaflet code library - see updates at http://leafletjs.com/download.html -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+  <!-- Load jQuery and PapaParse to read data from a CSV file -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+
+  <!-- Position the map with Cascading Style Sheet (CSS) -->
+  <style>
+    body { margin:0; padding:0; }
+    #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+  </style>
+
+</head>
+<body>
+
+  <!-- Insert HTML division tag to layout the map -->
+  <div id="map"></div>
+
+  <!-- Insert Javascript (.js) code to create the map -->
+  <script>
+
+  // originally from:  https://leafletjs.com/examples/custom-icons/
+  // marker grouping from: https://leafletjs.com/examples/layers-control/ 
+
+  function makePOI(csvFile) {
+    // alert(csvFile);
+    // model for various icons 
+    var SDIcon = L.Icon.extend({
+      options: {
+        iconSize: [50, 50],
+        iconAnchor: [20, 20],
+        popupAnchor: [0, -10],
+     }
+    });
+    const clubs = L.layerGroup();
+  // Read markers data from file csvString
+    $.get(csvFile, function(csvString) {
+      // Use PapaParse to convert string to array of objects
+      var data = Papa.parse(csvString, {header: true, dynamicTyping: true}).data;
+      // For each row in data, create a marker and add it to clubs 
+      // For each row, columns `Latitude`, `Longitude`, Description, Icon, and `Title` are required
+      for (var i in data) {
+        var row = data[i];
+	//alert('Title:'+row.Title);
+        var marker = L.marker([row.Latitude, row.Longitude], {
+          icon: new SDIcon({iconUrl: row.Icon })
+          }).bindPopup('<strong>'+row.Title + '</strong><br>'+row.Description).addTo(clubs);
+      }
+    });
+    
+    return clubs;
+  }
+
+  function onClickCoord(e) {   // function to be performed on click
+	alert("You clicked the map at " + e.latlng);
+  }
+
+// make markers for input file -> overlays
+  msMarkers = makePOI('./TeilnehmerlisteMFG-4.csv');
+  const overlays = { 'Teilnehmer': msMarkers };
+
+// init OSM org tiles -> baseLayers 
+  const OpenStreetMap_org = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 18,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  });
+  const baseLayers = { 'OSM org': OpenStreetMap_org };
+
+  // Set up initial map center and zoom level
+  var map = L.map('map', {
+    center: [49.75, 11.0], // EDIT latitude, longitude to re-center map
+    zoom: 9,  // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+    layers: [OpenStreetMap_org, msMarkers],
+    scrollWheelZoom: true
+  });
+
+ /* Control panel to display map layers  für Controlpanell: hier Kommentarende einfügen und hinter Esri Luftbild entfernen
+  const controlLayers = L.control.layers( baseLayers, overlays, {
+    position: "topright",
+    collapsed: false
+  }).addTo(map);
+
+// init Standards OSM tiles
+  var OpenStreetMap_Mapnik = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+   });
+  controlLayers.addBaseLayer(OpenStreetMap_Mapnik, 'OSM standard'); 
+
+// init Esri Satellite tiles
+  var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+  });
+  controlLayers.addBaseLayer(Esri_WorldImagery, 'Esri Luftbild'); */
+
+// see more basemap options at https://leaflet-extras.github.io/leaflet-providers/preview/
+
+// make markers for input file 2 -> allMarkers2 and add to map
+//  allMarkers2 = makePOI('./Strahlen.txt');
+//  controlLayers.addOverlay(allMarkers2, 'Strahlen');
+
+  map.attributionControl.setPrefix(
+    'View <a href="https://github.com/HandsOnDataViz/leaflet-map-csv" target="_blank">code on GitHub</a>'
+  );
+
+	// Erlangen (Kreis)
+    const circle = L.circle([49.5922, 11.0310], {
+		color: 'red',
+		fillColor: '#f03',
+		fillOpacity: 0.1,
+		radius: 3000
+	}).addTo(map).bindPopup('Erlangen');
+ 
+// einzelne Marker vor Ort
+    var bahnhof = L.icon({
+    iconUrl: 'Daten/hbf.png',
+    iconSize: [40, 40],
+    iconAnchor:   [18, 40]  // point of the icon which will correspond to marker's location
+    });
+    // Bahnhof: 49.59605, 11.0021
+    // --> Bahnhof-Marker
+    L.marker([49.59605, 11.0021],{icon: bahnhof }).addTo(map)
+        .bindPopup('<b>Bahnhof Erlangen</b><br>150m zum Hugenottenplatz<br>mit Bus <b>294</b>, in 7 Minuten<br>nach "Röthelheimpark-Zentrum"').openPopup();
+
+    var bus_gruen = L.icon({
+    iconUrl: 'Daten/bus_green.png',
+    iconSize: [40, 40],
+    iconAnchor:   [18, 40]  // point of the icon which will correspond to marker's location
+    });
+    // Bus Hugenottenplatz: 49.5964, 11.00405
+    L.marker([49.5964,11.00405],{icon: bus_gruen}).addTo(map)
+        .bindPopup('<b>Hugenottenplatz</b><br>mit Bus <b>294</b>, in 7 Minuten<br>nach "<b>Röthelheimpark-Zentrum</b>"'); 
+
+    // Bus Röthelheim-Zentral: 49.592 11.02
+    // --> Bus-Marker
+    L.marker([49.592, 11.0289],{icon: bus_gruen}).addTo(map)
+        .bindPopup('Röthelheimpark-Zentrum, Bus 294').openPopup();
+
+    // Veranstaltungsort: 49.5922 11.0310	
+    // --> Popup soll offen bleiben	
+    // --> Logo einbinden hat noch Fehler beim 1, Öffnen 
+    L.marker([49.5921, 11.0310]).addTo(map)
+	 .bindPopup('<img src="./Daten/Logo_Gruppengefluester-07-200px.jpg" align="left"><p>mit Cornelia<br>zu Gast bei Spiritlink<br><a href="https://cornelia-dietz.de" title="mehr Informationen" target="_new">Gruppenflüsterer-Camp</a></p>').openPopup();
+
+    // Buslinie
+    var latlngs = [
+		[49.591847, 11.029072],
+		[49.592395, 11.022050],
+		[49.593793, 11.022270],
+		[49.594311, 11.015036],
+		[49.594320, 11.014569],
+		[49.594047, 11.009641],
+		[49.597213, 11.008485],
+		[49.596554, 11.004114],
+		[49.596447, 11.004023],
+		[49.596381, 11.004041]
+	];
+    polyline = L.polyline(latlngs, {color: 'green'}).addTo(map);
+
+
+// Strahlen...
+  function makeStar2(csvFile, dist, center) {
+  // Read position of markers data from file csvString
+    // alert('makeStar:'+csvFile +' '+ dist.toString());
+
+    const lines = [];
+    const difflatlng = [];
+    const latfak = 0.65;  // correction for long contraction 
+    var dfak = 0.0;
+    var ldist ;
+    const star = L.layerGroup();
+ 
+    $.get(csvFile, function(csvString) {
+      // Use PapaParse to convert string to array of objects
+      var data = Papa.parse(csvString, {header: true, dynamicTyping: true}).data;
+      // For each row in data, create a marker and add it to clubs 
+      // For each row, columns `Latitude`, `Longitude`, Description, Icon, and `Title` are required
+      
+      // for all points draw a line from Marker to a circle of radius = dist around center
+      for (var i in data) {
+        var row = data[i];
+        if (i<3000) {  // allow to reduce data for testing
+	     difflatlng[0] = center[0] - row.Latitude; difflatlng[1] = center[1] - row.Longitude;
+	     // alert('difflatlng:'+difflatlng.toString());
+           ldist = Math.sqrt(difflatlng[0]**2 + (difflatlng[1]*latfak)**2)*111;
+           dfak = dist / 1000 / ldist;
+	     lines[i] = [[center[0]-dfak*difflatlng[0],center[1]-dfak*difflatlng[1]],[row.Latitude,row.Longitude]];
+	    // alert(lines[i].toString());
+            polyline = L.polyline([lines[i]], {color: 'green'}).addTo(star).bindPopup('Entfernung nach Erlangen: '+ Math.round(ldist).toString()+' km');  
+          }
+      }
+    });
+    
+    return star;
+  }
+    
+
+  /* Control panel to display map layers */
+  const controlLayers = L.control.layers( baseLayers, overlays, {
+    position: "topright",
+    collapsed: false
+  }).addTo(map);
+
+/*/ init Standards OSM tiles
+  var OpenStreetMap_Mapnik = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+   });
+  controlLayers.addBaseLayer(OpenStreetMap_Mapnik, 'OSM standard'); 
+
+// init Esri Satellite tiles
+  var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+  });
+  controlLayers.addBaseLayer(Esri_WorldImagery, 'Esri Luftbild'); 
+
+// see more basemap options at https://leaflet-extras.github.io/leaflet-providers/preview/
+*/
+
+/* make markers for input file 2 -> allMarkers2 and add to map
+  allMarkers2 = makePOI('./Strahlen.txt');
+  controlLayers.addOverlay(allMarkers2, 'Strahlen'); */
+
+// make star from file 1 -> star and add to map
+  stars = makeStar2('./TeilnehmerlisteMFG-4.csv',3000, [49.5921, 11.0310]);
+  controlLayers.addOverlay(stars , 'Stern');
+
+
+  map.attributionControl.setPrefix(
+    'View <a href="https://github.com/HandsOnDataViz/leaflet-map-csv" target="_blank">code on GitHub</a>'
+  );
+
+  map.on('click', onClickCoord);   // add onClickCoord to map  
+  </script>
+</body>
+</html>
