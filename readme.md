@@ -13,3 +13,5 @@ v2:  Stern -> overlay
 14h Markus Version läuft jetzt
 
 15h mit Custom Markern und Koordinaten-Click
+
+16h mit gpx Datei Fussweg.gpx (in Daten) benötigt scripts/gpx.js
