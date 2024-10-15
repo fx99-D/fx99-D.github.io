@@ -1,0 +1,16 @@
+Title;Description;Latitude;Longitude;Icon
+Anna;"<ul><li>fahre mit der Bahn und suche Mitfahrende</li>
+<li>oder suche 1 Platz im Auto</li>
+<li>oder biete 3 Plätze im Auto</li></ul><br>anna@gmx.de";49.6400;11.0000;Daten/Icon_Gruppengefluester-07-40px.png
+Bernd;"<ul><li>fahre mit der Bahn und suche Mitfahrende</li>
+<li>oder suche 2 Plätze im Auto</li></ul><br>bernd@gmx.de";49.6600;11.0300;Daten/Icon_Gruppengefluester-07-40px.png
+Carina;<ul><li>biete 1 Platz im Auto</li></ul><br>carina@gmx.de;49.6420;11.0660;Daten/Icon_Gruppengefluester-07-40px.png
+Daniel;<ul><li>fahre mit der Bahn und suche Mitfahrende</li></ul><br>martin@gmx.de;49.5933;10.9526;Daten/Icon_Gruppengefluester-07-40px.png
+Max Muster;B:ja  suche:0  biete:0;49.814;10.989;Daten/Icon_Gruppengefluester-07-40px.png
+Nuernberg;B:ja  suche:0  biete:0;49.423;11.035;Daten/Icon_Gruppengefluester-07-40px.png
+Neustadt;B:nein  suche:0  biete:3;49.589;10.599;Daten/Icon_Gruppengefluester-07-40px.png
+Fuerth;B:ja  suche:0  biete:0;49.477;10.988;Daten/Icon_Gruppengefluester-07-40px.png
+Langenzenn;B:nein  suche:1  biete:0;49.491;10.800;Daten/Icon_Gruppengefluester-07-40px.png
+Lauf;B:ja  suche:0  biete:0;49.513;11.278;Daten/Icon_Gruppengefluester-07-40px.png
+Bamberg;B:nein  suche:0  biete:3;49.897;10.891;Daten/Icon_Gruppengefluester-07-40px.png
+Schwabach;B:ja  suche:0  biete:0;49.325;11.026;Daten/Icon_Gruppengefluester-07-40px.png
