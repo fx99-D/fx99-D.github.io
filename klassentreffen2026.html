@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <link rel="stylesheet" href="_css/style.css">
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+<title>Klassentreffen 2026 in Kassel</title>
+</head>
+<body>
+<h1>Klassentreffen 2026 in Kassel</h1>
+<div id="map" style="width: 720px; height: 600px; position: relative;" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0">
+
+</div>
+
+<script type="text/javascript">
+    var beznr = 'bez31';
+    var bezname = 'BI70: Klassentreffen 2026 in Kassel';
+    var kamilat = 51.316666666667;
+    var kamilon = 9.445;
+    var osmzoom = 13;
+    var posICEBHF = [51.313121, 9.446025]
+    var posaugustinum = [51.30207, 9.41293]
+    var posherkules = [51.316102, 9.393207]
+    var posstrabwihoe = [51.315673, 9.423658]
+    var posschwihoe = [51.314982, 9.415931]
+    var posgrimmwe = [51.309100, 9.489366]
+    var poskarlsaue = [51.30289, 9.49371]
+    var posdoha = [51.312135, 9.499490]
+
+var map = L.map('map').setView([kamilat, kamilon], osmzoom);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+    var icebhf = L.marker(posICEBHF).addTo(map).bindPopup("ICE-Bahnhof");
+    var augustinum = L.marker(posaugustinum).addTo(map).bindPopup("Augustinum");
+    var herkules = L.marker(posherkules).addTo(map).bindPopup("Herkules");
+    var strabawihoe = L.marker(posstrabwihoe).addTo(map).bindPopup("Straßenbahnhaltestelle Wilhelmshöhe");
+    var marker = L.marker(posschwihoe).addTo(map).addTo(map).bindPopup("Schloss Wilhelmshöhe");
+    var marker = L.marker(posgrimmwe).addTo(map).addTo(map).bindPopup("Grimmwelt");
+    var marker = L.marker(poskarlsaue).addTo(map).addTo(map).bindPopup("Karlsaue");
+    //var marker = L.marker(poskarlsaue).addTo(map).addTo(map).bindPopup("Herkules");
+    var marker = L.marker(posdoha).addTo(map).addTo(map).bindPopup("Documenta Halle");
+
+
+</script>
+</body>
+</html>
